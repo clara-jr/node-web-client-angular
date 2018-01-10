@@ -1,0 +1,13 @@
+{
+  "name": "node-web-client-angular",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": "6.11.x",
+    "npm": "3.10.x"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "express": "~4.13.1"
+  }
+}
