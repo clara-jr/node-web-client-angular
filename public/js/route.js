@@ -1,4 +1,4 @@
-var app = angular.module("module_name",["ngRoute", "ngResource"])
+var app = angular.module("module_name",["ngRoute", "ngResource", "ngCookies"])
 	.config(function($routeProvider) {
 		$routeProvider
 			.when("/", {
@@ -20,6 +20,10 @@ var app = angular.module("module_name",["ngRoute", "ngResource"])
 			.when("/webs/:webId/:filterId", {
 				controller: "webController_updateFilterOfWebForm",
 				templateUrl: "views/webs/filter.html"
+			})
+			.when("/logout", {
+				controller: "sessionController_logout",
+				templateUrl: "views/index.html"
 			})
 			.otherwise("/");
 	})
