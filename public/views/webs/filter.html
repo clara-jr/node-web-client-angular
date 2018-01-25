@@ -1,4 +1,4 @@
-<div class="container filter">
+<div ng-show='!error' class="container filter">
 	<form ng-submit="updateFilter(webId, filter._id)" class="form-horizontal">
 		<p>Update the filter:</p>
 		<div class="form-group">
@@ -20,6 +20,8 @@
 	    </div>
 	  	<button class="btn btn-info" type="submit">Update</button>
 	</form>
-	<div ng-show='error' class="alert alert-danger" role="alert">Error: {{error}}</div>
 	<button class="btn btn-danger" ng-click="deleteFilter(webId, filter._id)">Delete filter</button>
+</div>
+<div ng-show='error' class="container web">
+	<div class="alert alert-danger" role="alert">Error: {{error}}</div>
 </div>

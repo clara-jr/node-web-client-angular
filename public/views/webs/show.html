@@ -1,4 +1,4 @@
-<div class="container web">
+<div ng-show='!error' class="container web">
 	<a class="web" href='#!/webs/{{web._id}}'>
 	{{web.url}}</a>
 	{{web.genre}}
@@ -34,6 +34,8 @@
 	    </div>
 	    <button style="font-size:12px; padding: 2px 8px; margin-top: 5px;" class="btn btn-info" type="submit">Add new filter</button>
 	</form>
-	<div ng-show='error' class="alert alert-danger" role="alert">Error: {{error}}</div>
 	<button ng-click="deleteWeb(web._id)" class="btn btn-danger">Delete web</button>
+</div>
+<div ng-show='error' class="container web">
+	<div class="alert alert-danger" role="alert">Error: {{error}}</div>
 </div>
