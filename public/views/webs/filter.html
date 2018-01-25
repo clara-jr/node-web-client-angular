@@ -20,5 +20,6 @@
 	    </div>
 	  	<button class="btn btn-info" type="submit">Update</button>
 	</form>
+	<div ng-show='error' class="alert alert-danger" role="alert">Error: {{error}}</div>
 	<button class="btn btn-danger" ng-click="deleteFilter(webId, filter._id)">Delete filter</button>
 </div>

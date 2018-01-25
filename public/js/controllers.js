@@ -5,31 +5,35 @@ angular.module("module_name")
   $rootScope.username = "";
   $location.path('/');
 })
-.controller("sessionController_index", function($cookies, $location, $rootScope, $scope, $http) {
+.controller("sessionController_index", function($cookies, $location, $rootScope, $scope, $http, $resource) {
   console.log("sessionController_index");
   var cookie = $cookies.get('user');
   console.log(cookie);
-  if (cookie != "") {
-    $scope.title = "Welcome";
-    $rootScope.username = cookie;
-  } else {
-    $rootScope.username = "";
-  }
+  $scope.title = "Welcome";
+  $rootScope.username = cookie;
   $scope.login = function() {
-    // Setting a cookie
-    $cookies.put('user', $scope.user.login);
-    // Retrieving a cookie
-    var cookie = $cookies.get('user');
-    console.log(cookie);
-    $rootScope.username = cookie;
-    $scope.user = {};
-    $location.path('/');
+    $resource('http://localhost:8080/login/:u/:p', {u: "@u", p: "@p"})
+      .get({u: $scope.user.login}, {p: $scope.user.password}, function(data) {
+      console.log(data);
+      var cookie = undefined;
+      if (data.correct) {
+        // Setting a cookie
+        $cookies.put('user', $scope.user.login);
+        // Retrieving a cookie
+        cookie = $cookies.get('user');
+        console.log(cookie);
+      } else {
+        $scope.error = data.message;
+      }
+      $rootScope.username = cookie;
+      $scope.user = {};
+      $location.path('/');
+    });
   };
 })
 .controller("webController_list", function($cookies, $location, $rootScope, $scope, $http, $resource) {
   var cookie = $cookies.get('user');
   if (!cookie) {
-    $rootScope.username = "";
     $location.path('/');
   }
   $rootScope.username = cookie;
@@ -39,7 +43,6 @@ angular.module("module_name")
 .controller("webController_findById", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
   if (!cookie) {
-    $rootScope.username = "";
     $location.path('/');
   }
   $rootScope.username = cookie;
@@ -75,7 +78,6 @@ angular.module("module_name")
 .controller("webController_addWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource) {
   var cookie = $cookies.get('user');
   if (!cookie) {
-    $rootScope.username = "";
     $location.path('/');
   }
   $rootScope.username = cookie;
@@ -99,7 +101,6 @@ angular.module("module_name")
 .controller("webController_updateFilterOfWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
   if (!cookie) {
-    $rootScope.username = "";
     $location.path('/');
   }
   $rootScope.username = cookie;
