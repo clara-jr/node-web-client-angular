@@ -26,14 +26,22 @@ angular.module("module_name")
     $location.path('/');
   };
 })
-.controller("webController_list", function($cookies, $rootScope, $scope, $http, $resource) {
+.controller("webController_list", function($cookies, $location, $rootScope, $scope, $http, $resource) {
   var cookie = $cookies.get('user');
+  if (!cookie) {
+    $rootScope.username = "";
+    $location.path('/');
+  }
   $rootScope.username = cookie;
   console.log("webController_list");
   $scope.webs = $resource('http://localhost:8080/webs').query();
 })
-.controller("webController_findById", function($cookies, $location, $rootScope, $scope, $http, $routeParams, $resource) {
+.controller("webController_findById", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
+  if (!cookie) {
+    $rootScope.username = "";
+    $location.path('/');
+  }
   $rootScope.username = cookie;
   console.log("webController_findById");
   $scope.web = $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).get({webId: $routeParams.webId});
@@ -66,6 +74,10 @@ angular.module("module_name")
 })
 .controller("webController_addWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource) {
   var cookie = $cookies.get('user');
+  if (!cookie) {
+    $rootScope.username = "";
+    $location.path('/');
+  }
   $rootScope.username = cookie;
   console.log("webController_addWebForm");
   $scope.newWeb = {};
@@ -84,8 +96,12 @@ angular.module("module_name")
     });
   }
 })
-.controller("webController_updateFilterOfWebForm", function($cookies, $location, $rootScope, $scope, $http, $routeParams, $resource) {
+.controller("webController_updateFilterOfWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
+  if (!cookie) {
+    $rootScope.username = "";
+    $location.path('/');
+  }
   $rootScope.username = cookie;
   console.log("webController_updateFilterOfWebForm");
   $scope.filter = $resource('http://localhost:8080/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"})
