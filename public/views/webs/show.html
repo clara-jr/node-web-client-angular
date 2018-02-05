@@ -1,9 +1,10 @@
-<div ng-show='!error' class="container web">
-	<a class="web" href='#!/webs/{{web._id}}'>
-	{{web.url}}</a>
-	{{web.genre}}
-	<div ng-show='(web.filters.length > 0)'>
-		</br>
+<div ng-show='!error' class="container">
+	<div style="margin-top:20px;">
+		<a href='#!/webs/{{web._id}}'>
+		{{web.url}}</a>
+		{{web.genre}}
+	</div>
+	<div style="margin-top:20px;" ng-show='(web.filters.length > 0)'>
 		<b>Filters:</b>
 		</br>
 		<span ng-repeat="f in web.filters">
@@ -11,31 +12,34 @@
 			<a style="font-size:12px; padding: 2px 8px;" href="#!/webs/{{web._id}}/{{f._id}}" class="btn btn-info" type="submit">Update filter</a>
 			</br>
 		</span>
-		</br>
 	</div>
-	<form ng-submit="addFilterToWeb(web._id)" class="form-horizontal">
-		New Filter:</br></br>
-		<div class="form-group">
-		    <label class="control-label col-sm-2" for="pattern">Pattern:</label>
-		    <div class="col-sm-10">
-		      <input required ng-model="newFilter.pattern" class="form-control" type="text" name="pattern" id="pattern"/>
-		    </div>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<form style="margin-top:20px;" ng-submit="addFilterToWeb(web._id)" class="form-horizontal">
+				New Filter:</br></br>
+				<div class="form-group">
+				    <label class="control-label col-sm-2" for="pattern">Pattern:</label>
+				    <div class="col-sm-10" style="padding-right:60px;">
+				      <input required ng-model="newFilter.pattern" class="form-control" type="text"/>
+				    </div>
+				</div>
+				<div class="form-group">
+			      <label class="control-label col-sm-2" for="type">Type:</label>
+			      <div class="col-sm-10" style="padding-right:60px;">
+			      	<select required class="form-control" ng-model="newFilter.type">
+				        <option>Title</option>
+				        <option>Body</option>
+				        <option>Date</option>
+				        <option>Author</option>
+				    </select>
+			      </div>
+			    </div>
+			  	<button style="margin-top:5px;" class="btn btn-info" type="submit">Add new filter</button>
+			</form>
+			<button ng-click="deleteWeb(web._id)" class="btn btn-danger">Delete web</button>
 		</div>
-		<div class="form-group">
-	      <label class="control-label col-sm-2" for="type">Type:</label>
-	      <div class="col-sm-10">
-	      	<select required class="form-control" ng-model="newFilter.type">
-		        <option>Title</option>
-		        <option>Body</option>
-		        <option>Date</option>
-		        <option>Author</option>
-		    </select>
-	      </div>
-	    </div>
-	    <button style="font-size:12px; padding: 2px 8px; margin-top: 5px;" class="btn btn-info" type="submit">Add new filter</button>
-	</form>
-	<button ng-click="deleteWeb(web._id)" class="btn btn-danger">Delete web</button>
+	</div>
 </div>
-<div ng-show='error' class="container web">
+<div ng-show='error' class="container">
 	<div class="alert alert-danger" role="alert">Error: {{error}}</div>
 </div>

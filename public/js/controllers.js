@@ -11,6 +11,9 @@ angular.module("module_name")
   console.log(cookie);
   $scope.title = "Welcome";
   $rootScope.username = cookie;
+  if (!cookie) {
+    $rootScope.color = "rgba(0,0,0,0)";
+  }
   $scope.login = function() {
     $resource('http://localhost:8080/login/:u/:p', {u: "@u", p: "@p"})
       .get({u: $scope.user.login}, {p: $scope.user.password}, function(data) {
@@ -21,6 +24,7 @@ angular.module("module_name")
         $cookies.put('user', $scope.user.login);
         // Retrieving a cookie
         cookie = $cookies.get('user');
+        $rootScope.color = "rgba(0,0,0,.08)";
         console.log(cookie);
       } else {
         $scope.error = data.message;
