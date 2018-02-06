@@ -31,11 +31,13 @@
 				        <option>Body</option>
 				        <option>Date</option>
 				        <option>Author</option>
+				        <option>Image</option>
 				    </select>
 			      </div>
 			    </div>
 			  	<button style="margin-top:5px;" class="btn btn-info" type="submit">Add new filter</button>
 			</form>
+			<div ng-show='errorFilter' class="alert alert-danger" role="alert">Error: {{errorFilter}}</div>
 			<button ng-click="deleteWeb(web._id)" class="btn btn-danger">Delete web</button>
 		</div>
 	</div>

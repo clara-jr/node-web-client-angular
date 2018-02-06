@@ -78,8 +78,12 @@ angular.module("module_name")
         data: datajson
       }).then(function(data, status, headers, config){
         console.log(data);
-        $scope.web.filters.push($scope.newFilter);
-        $scope.newFilter = {};
+        if (data.data.error) {
+          $scope.errorFilter = data.data.error;
+        } else {
+          $scope.web.filters.push($scope.newFilter);
+          $scope.newFilter = {};
+        }
       },function(error, status, headers, config){
         console.log(error);
     });
