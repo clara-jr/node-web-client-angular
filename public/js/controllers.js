@@ -24,7 +24,7 @@ angular.module("module_name")
         $cookies.put('user', $scope.user.login);
         // Retrieving a cookie
         cookie = $cookies.get('user');
-        $rootScope.color = "rgba(0,0,0,.08)";
+        $rootScope.color = "#eee";
         console.log(cookie);
       } else {
         $scope.error = data.message;

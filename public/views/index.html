@@ -1,39 +1,58 @@
 <div ng-show='username' class="container">
   <h1>{{title}}</h1>
   <br>
-  <p>In this website you can create filters for some webs or look up the existing ones.</p>
+  <div class="row">
+	<div class="col-sm-4">
+      <img class="mb-4" style="margin-bottom:10px;" src="images/html-icon.png" alt="" width="90" height="90">
+      <p>Web sites are written using HTML, which means that each web page is a structured document.
+        Sometimes it would be great to obtain some data from them and preserve the structure while we’re at it.</p>
+    </div>
+    <div class="col-sm-4">
+      <img class="mb-4" style="margin-bottom:10px;" src="images/website-scraping.png" alt="" width="90" height="90">
+      <p>Web sites don’t always provide their data in comfortable formats.
+        This is where web scraping comes in.</p>
+    </div>
+    <div class="col-sm-4">
+      <img class="mb-4" style="margin-bottom:10px;" src="images/text-editor.png" alt="" width="90" height="90">
+      <p>Web scraping is the practice of using a computer program to sift
+      through a web page and gather the data that you need in a format most useful to you while at the same time
+      preserving the structure of the data.</p>
+    </div>
+  </div>
 </div>
 
 <div ng-show='!username' class="container">
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+      		<img class="mb-4" style="margin-bottom:10px;" src="images/data-scraping-3.png" alt="" width="100" height="100">
+      		<h3 style="font-size:20px; margin-top:0px; margin-bottom:20px;">In this website you can create filters for some webs or look up the existing ones</h3>
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<strong style=""> Sign in to continue</strong>
+        		<div class="panel-heading">
+					<h3 style="font-size:16px; margin:2px;">Sign in to continue</h3>
 				</div>
 				<div class="panel-body">
 					<form ng-submit="login()">
 						<fieldset>
 							<div class="row">
-								<div class="col-sm-12 col-md-10  col-md-offset-1 ">
+								<div class="col-sm-12 col-md-10 col-md-offset-1">
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon">
-												<i class="glyphicon glyphicon-user"></i>
-											</span> 
+												<i class="glyphicon glyphicon-user" style="padding-right:0px;"></i>
+											</span>
 											<input class="form-control" type="text" ng-model="user.login" required placeholder="Username">
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="input-group">
 											<span class="input-group-addon">
-												<i class="glyphicon glyphicon-lock"></i>
+												<i class="glyphicon glyphicon-lock" style="padding-right:0px;"></i>
 											</span>
 											<input class="form-control" type="password" ng-model="user.password" required placeholder="Password">
 										</div>
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-info btn-block">Sign in</button>
+										<button type="submit" class="btn btn-primary btn-block">Sign in</button>
 									</div>
 								</div>
 							</div>
@@ -41,7 +60,7 @@
 					</form>
 				</div>
 				<div ng-show='error' class="alert alert-danger panel-footer" style="background-color: #f2dede; margin-bottom:0px; border-radius:0px;" role="alert">Error: {{error}}</div>
-            </div>
+        	</div>
 		</div>
 	</div>
 </div>
