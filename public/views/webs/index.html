@@ -1,18 +1,18 @@
 <div class="container">
 	<div class="row" ng-show='(webs.length > 0)'>
 		<div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="w in webs">
-			<a class="web" href='#!/webs/{{w._id}}'>{{w.url}}</a>
-				{{w.genre}}
-				<div ng-show="(w.filters.length > 0)">
-					</br>
-					<b>Filters:</b>
-					</br>
-				  	<span ng-repeat="f in w.filters">
-						Pattern: {{f.pattern}} Type: {{f.type}}
-						</br>
-				  	</span>
-				  	</br>
-				</div>
+			<a href='#!/webs/{{w._id}}' style="background-color:#fff; margin-bottom: 10px;" class="btn btn-default" type="button"><span class="glyphicon glyphicon-edit" style="font-size: 16px;"></span>{{w.url}}</a>
+			<ul class="down" style="margin-left:auto;">
+				<li><p style="color:#337ab7;"><b>Genre:</b></p></li>
+			    <li role="separator" class="divider"></li>
+			    <li><p>{{w.genre}}</p></li>
+			    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
+			    <li ng-show="(w.filters.length > 0)"><p style="color:#337ab7;"><b>Filters:</b></p></li>
+			    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
+			    <span ng-repeat="f in w.filters">
+			    	<li><p>{{f.type}}: {{f.pattern}}</p></li>
+			    </span>
+			</ul>
 		</div>
 	</div>
 	<div class="row" ng-show='(webs.length <= 0)'>
