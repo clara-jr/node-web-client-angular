@@ -43,6 +43,12 @@ angular.module("module_name")
   $rootScope.username = cookie;
   console.log("webController_list");
   $scope.webs = $resource('http://localhost:8080/webs').query();
+  $scope.deleteWeb = function(webId) {
+    $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).delete({webId: webId}, function(data) {
+      console.log(data);
+      $scope.webs = $resource('http://localhost:8080/webs').query();
+    });
+  };
 })
 .controller("webController_findById", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
@@ -59,12 +65,6 @@ angular.module("module_name")
       $scope.web = data;
     }
   });
-  $scope.deleteWeb = function(webId) {
-    $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).delete({webId: webId}, function(data) {
-      console.log(data);
-      $location.path('/webs');
-    });
-  };
   $scope.addFilterToWeb = function(webId) {
     pattern = $scope.newFilter.pattern;
     type = $scope.newFilter.type;
@@ -83,6 +83,7 @@ angular.module("module_name")
         } else {
           $scope.web.filters.push($scope.newFilter);
           $scope.newFilter = {};
+          $scope.errorFilter = "";
         }
       },function(error, status, headers, config){
         console.log(error);
@@ -106,7 +107,7 @@ angular.module("module_name")
         $location.path('/webs');
       }
     });
-  }
+  };
 })
 .controller("webController_updateFilterOfWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
   var cookie = $cookies.get('user');
@@ -130,7 +131,7 @@ angular.module("module_name")
       console.log(data);
       $location.path('/webs/'+webId);
     });
-  }
+  };
   $scope.updateFilter = function(webId, filterId) {
     pattern = $scope.filter.pattern;
     type = $scope.filter.type;
@@ -144,9 +145,15 @@ angular.module("module_name")
         data: datajson
       }).then(function(data, status, headers, config){
         console.log(data);
-        $location.path('/webs/'+webId);
+        console.log(data.data);
+        console.log(data.data.error);
+        if (data.data.error) {
+          $scope.errorFilter = data.data.error;
+        } else {
+          $location.path('/webs/'+webId);
+        }
       },function(error, status, headers, config){
         console.log(error);
     });
-  }
+  };
 });
