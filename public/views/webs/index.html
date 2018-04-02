@@ -1,20 +1,24 @@
 <div class="container">
 	<div class="row" ng-show='(webs.length > 0)'>
-		<div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="w in webs">
-			<a href='#!/webs/{{w._id}}' style="background-color:#fff; margin-bottom: 10px; margin-top: 10px;" class="btn btn-default" type="button"><span class="glyphicon glyphicon-edit" style="font-size: 16px;"></span>{{w.url}}</a>
-			<a style="border-radius: 50%; padding: 2px 8px; margin-left: 5px; margin-top: 2px; margin-bottom: 2px;" class="btn btn-danger" type="submit" ng-click="deleteWeb(w._id)"><span style="padding-right:0px;" class="glyphicon glyphicon-minus" style="font-size: 16px;"></span></a>
-			<ul class="down" style="margin-left:auto;">
-				<li><p style="color:#337ab7;"><b>Genre:</b></p></li>
-			    <li role="separator" class="divider"></li>
-			    <li><p>{{w.genre}}</p></li>
-			    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
-			    <li ng-show="(w.filters.length > 0)"><p style="color:#337ab7;"><b>Filters:</b></p></li>
-			    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
-			    <span ng-repeat="f in w.filters">
-			    	<li><p>{{f.type}}: {{f.pattern}}</p></li>
-			    </span>
-			</ul>
-		</div>
+		<div ng-repeat="w in webs">
+			<div class="col-xs-12 col-sm-6 col-md-3" >
+				<a href='#!/webs/{{w._id}}' style="background-color:#fff; margin-bottom: 10px; margin-top: 10px;" class="btn btn-default" type="button"><span class="glyphicon glyphicon-edit" style="font-size: 16px;"></span>{{w.url}}</a>
+				<a style="border-radius: 50%; padding: 2px 8px; margin-left: 5px; margin-top: 2px; margin-bottom: 2px;" class="btn btn-danger" type="submit" ng-click="deleteWeb(w._id)"><span style="padding-right:0px;" class="glyphicon glyphicon-minus" style="font-size: 16px;"></span></a>
+				<ul class="down" style="margin-left:auto;">
+					<li><p style="color:#337ab7;"><b>Genre:</b></p></li>
+				    <li role="separator" class="divider"></li>
+				    <li><p>{{w.genre}}</p></li>
+				    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
+				    <li ng-show="(w.filters.length > 0)"><p style="color:#337ab7;"><b>Filters:</b></p></li>
+				    <li ng-show="(w.filters.length > 0)" role="separator" class="divider"></li>
+				    <span ng-repeat="f in w.filters">
+				    	<li><p>{{f.type}}: {{f.pattern}}</p></li>
+				    </span>
+				</ul>
+			</div>
+			<div class="clearfix visible-sm-block" ng-if="$odd"></div>
+			<div class="clearfix visible-md-block" ng-if="($index+1) % 4 == 0"></div>
+		<div>
 	</div>
 	<div class="row" ng-show='(webs.length <= 0)'>
 		<p>Ups! You haven't uploaded any webs yet!</p>

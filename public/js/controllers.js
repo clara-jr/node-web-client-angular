@@ -5,7 +5,7 @@ angular.module("module_name")
   $rootScope.username = "";
   $location.path('/');
 })
-.controller("sessionController_index", function($cookies, $location, $rootScope, $scope, $http, $resource) {
+.controller("sessionController_index", function($cookies, $location, $rootScope, $scope, $resource) {
   console.log("sessionController_index");
   var cookie = $cookies.get('user');
   console.log(cookie);
@@ -16,26 +16,29 @@ angular.module("module_name")
   }
   $scope.login = function() {
     $resource('http://localhost:8080/login/:u/:p', {u: "@u", p: "@p"})
-      .get({u: $scope.user.login}, {p: $scope.user.password}, function(data) {
-      console.log(data);
-      var cookie = undefined;
-      if (data.correct) {
+      .get({u: $scope.user.login}, {p: $scope.user.password}).$promise.then(function(data){
+        console.log(data);
+        var cookie = undefined;
         // Setting a cookie
         $cookies.put('user', $scope.user.login);
         // Retrieving a cookie
         cookie = $cookies.get('user');
         $rootScope.color = "#eee";
         console.log(cookie);
-      } else {
-        $scope.error = data.message;
+        $rootScope.username = cookie;
+        $scope.user = {};
+        $location.path('/');
+      },function(error){
+        var cookie = undefined;
+        $scope.error = error.data.error;
+        $rootScope.username = cookie;
+        $scope.user = {};
+        $location.path('/');
       }
-      $rootScope.username = cookie;
-      $scope.user = {};
-      $location.path('/');
-    });
+    );
   };
 })
-.controller("webController_list", function($cookies, $location, $rootScope, $scope, $http, $resource) {
+.controller("webController_list", function($cookies, $location, $rootScope, $scope, $resource) {
   var cookie = $cookies.get('user');
   if (!cookie) {
     $location.path('/');
@@ -57,14 +60,14 @@ angular.module("module_name")
   }
   $rootScope.username = cookie;
   console.log("webController_findById");
-  $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).get({webId: $routeParams.webId}, function(data) {
-    console.log(data);
-    if (data.error) {
-      $scope.error = data.error;
-    } else {
+  $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).get({webId: $routeParams.webId}).$promise.then(function(data){
+      console.log(data);
       $scope.web = data;
+    },function(error){
+      console.log(error);
+      $scope.error = error.data.error;
     }
-  });
+  );
   $scope.addFilterToWeb = function(webId) {
     pattern = $scope.newFilter.pattern;
     type = $scope.newFilter.type;
@@ -78,19 +81,16 @@ angular.module("module_name")
         data: datajson
       }).then(function(data, status, headers, config){
         console.log(data);
-        if (data.data.error) {
-          $scope.errorFilter = data.data.error;
-        } else {
-          $scope.web.filters.push($scope.newFilter);
-          $scope.newFilter = {};
-          $scope.errorFilter = "";
-        }
+        $scope.web.filters.push($scope.newFilter);
+        $scope.newFilter = {};
+        $scope.errorFilter = "";
       },function(error, status, headers, config){
         console.log(error);
+        $scope.errorFilter = error.data.error;
     });
   };
 })
-.controller("webController_addWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource) {
+.controller("webController_addWebForm", function($cookies, $location, $rootScope, $scope, $resource) {
   var cookie = $cookies.get('user');
   if (!cookie) {
     $location.path('/');
@@ -98,15 +98,15 @@ angular.module("module_name")
   $rootScope.username = cookie;
   console.log("webController_addWebForm");
   $scope.addWeb = function(webId) {
-    $resource('http://localhost:8080/webs/').save({data: $scope.newWeb}, function(data) {
-      console.log(data);
-      if (data.error) {
-        $scope.error = data.error;
-      } else {
+    $resource('http://localhost:8080/webs/').save({data: $scope.newWeb}).$promise.then(function(data){
+        console.log(data);
         $scope.newWeb = {};
         $location.path('/webs');
+      },function(error){
+        console.log(error);
+        $scope.error = error.data.error;
       }
-    });
+    );
   };
 })
 .controller("webController_updateFilterOfWebForm", function($cookies, $location, $rootScope, $scope, $http, $resource, $routeParams) {
@@ -117,15 +117,15 @@ angular.module("module_name")
   $rootScope.username = cookie;
   console.log("webController_updateFilterOfWebForm");
   $resource('http://localhost:8080/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"})
-    .get({webId: $routeParams.webId}, {filterId: $routeParams.filterId}, function(data) {
-    console.log(data);
-    if (data.error) {
-      $scope.error = data.error;
-    } else {
+    .get({webId: $routeParams.webId}, {filterId: $routeParams.filterId}).$promise.then(function(data){
+      console.log(data);
       $scope.filter = data;
       $scope.webId = $routeParams.webId;
+    },function(error){
+      console.log(error);
+      $scope.error = error.data.error;
     }
-  });
+  );
   $scope.deleteFilter = function(webId, filterId) {
     $resource('http://localhost:8080/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"}).delete({webId: webId}, {filterId: filterId}, function(data) {
       console.log(data);
@@ -147,13 +147,10 @@ angular.module("module_name")
         console.log(data);
         console.log(data.data);
         console.log(data.data.error);
-        if (data.data.error) {
-          $scope.errorFilter = data.data.error;
-        } else {
-          $location.path('/webs/'+webId);
-        }
+        $location.path('/webs/'+webId);
       },function(error, status, headers, config){
         console.log(error);
+        $scope.errorFilter = error.data.error;
     });
   };
 });
