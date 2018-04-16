@@ -1,12 +1,12 @@
 <div ng-show='!error' class="container">
 	<div class="row" style="margin-top:20px; margin-bottom:20px;">
 		<div class="col-sm-6">
-			<h3 style="width: fit-content; margin-right: auto; margin-left: auto; font-size: 30px; margin-bottom: 20px; color:#5bc0de; background-color:#fff; margin-bottom: 20px; margin-top: 10px; border: 1px solid transparent; border-radius: 4px; border-color: #ccc; padding: 6px 12px;">{{web.url}}</h3>
+			<h3 style="width: fit-content; margin-right: auto; margin-left: auto; font-size: 30px; margin-bottom: 20px; color:#5bc0de; background-color:#fff; margin-bottom: 20px; margin-top: 10px; border: 1px solid transparent; border-radius: 4px; border-color: #ccc; padding: 6px 12px;">{{web.name}} <br> {{web.url}}</h3>
 			<p style="font-size: 18px;"><b>Genre:</b> {{web.genre}}</p>
 			<div style="margin-top:20px;" ng-show='(web.filters.length > 0)'>
 				<p style="font-size: 18px;"><b>Filters:</b></p>
 				<span style="font-size: 18px;" ng-repeat="f in web.filters">
-					Pattern: {{f.pattern}} Type: {{f.type}}
+					Pattern: {{f.pattern}} Level: {{f.level}} Type: {{f.type}}
 					<a style="border-radius: 50%; padding: 2px 8px; margin-left: 5px; margin-top: 2px; margin-bottom: 2px;" href="#!/webs/{{web._id}}/{{f._id}}" class="btn btn-info" type="submit"><span style="padding-right:0px;" class="glyphicon glyphicon-edit" style="font-size: 16px;"></span></a>
 					</br>
 				</span>
@@ -22,6 +22,12 @@
 					</div>
 				</div>
 				<div class="form-group row">
+				    <label class="control-label col-sm-2" for="level">Level:</label>
+				    <div class="col-sm-10">
+						<input required ng-model="newFilter.level" class="form-control" type="number"/>
+					</div>
+				</div>
+				<div class="form-group row">
 					<label class="control-label col-sm-2" for="type">Type:</label>
 					    <div class="col-sm-10">
 					    <select required class="form-control" ng-model="newFilter.type">
@@ -30,6 +36,9 @@
 						    <option>Date</option>
 						    <option>Author</option>
 						    <option>Image</option>
+						    <option>Audio</option>
+						    <option>Section</option>
+					        <option>Logo</option>
 						</select>
 					</div>
 				</div>

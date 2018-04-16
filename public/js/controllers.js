@@ -15,7 +15,7 @@ angular.module("module_name")
     $rootScope.color = "rgba(0,0,0,0)";
   }
   $scope.login = function() {
-    $resource('http://localhost:8080/login/:u/:p', {u: "@u", p: "@p"})
+    $resource('http://localhost:1607/login/:u/:p', {u: "@u", p: "@p"})
       .get({u: $scope.user.login}, {p: $scope.user.password}).$promise.then(function(data){
         console.log(data);
         var cookie = undefined;
@@ -45,11 +45,11 @@ angular.module("module_name")
   }
   $rootScope.username = cookie;
   console.log("webController_list");
-  $scope.webs = $resource('http://localhost:8080/webs').query();
+  $scope.webs = $resource('http://localhost:1607/webs').query();
   $scope.deleteWeb = function(webId) {
-    $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).delete({webId: webId}, function(data) {
+    $resource('http://localhost:1607/webs/:webId', {webId: "@webId"}).delete({webId: webId}, function(data) {
       console.log(data);
-      $scope.webs = $resource('http://localhost:8080/webs').query();
+      $scope.webs = $resource('http://localhost:1607/webs').query();
     });
   };
 })
@@ -60,7 +60,7 @@ angular.module("module_name")
   }
   $rootScope.username = cookie;
   console.log("webController_findById");
-  $resource('http://localhost:8080/webs/:webId', {webId: "@webId"}).get({webId: $routeParams.webId}).$promise.then(function(data){
+  $resource('http://localhost:1607/webs/:webId', {webId: "@webId"}).get({webId: $routeParams.webId}).$promise.then(function(data){
       console.log(data);
       $scope.web = data;
     },function(error){
@@ -70,14 +70,17 @@ angular.module("module_name")
   );
   $scope.addFilterToWeb = function(webId) {
     pattern = $scope.newFilter.pattern;
+    level = $scope.newFilter.level;
+    console.log("LEVEL" + level);
     type = $scope.newFilter.type;
     var datajson = {
       pattern: pattern,
+      level: level,
       filterType: type
     };
     $http({
         method: 'PUT',
-        url: 'http://localhost:8080/webs/'+webId,
+        url: 'http://localhost:1607/webs/'+webId,
         data: datajson
       }).then(function(data, status, headers, config){
         console.log(data);
@@ -98,7 +101,7 @@ angular.module("module_name")
   $rootScope.username = cookie;
   console.log("webController_addWebForm");
   $scope.addWeb = function(webId) {
-    $resource('http://localhost:8080/webs/').save({data: $scope.newWeb}).$promise.then(function(data){
+    $resource('http://localhost:1607/webs/').save({data: $scope.newWeb}).$promise.then(function(data){
         console.log(data);
         $scope.newWeb = {};
         $location.path('/webs');
@@ -116,10 +119,11 @@ angular.module("module_name")
   }
   $rootScope.username = cookie;
   console.log("webController_updateFilterOfWebForm");
-  $resource('http://localhost:8080/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"})
+  $resource('http://localhost:1607/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"})
     .get({webId: $routeParams.webId}, {filterId: $routeParams.filterId}).$promise.then(function(data){
       console.log(data);
       $scope.filter = data;
+      $scope.filter.level = parseInt($scope.filter.level);
       $scope.webId = $routeParams.webId;
     },function(error){
       console.log(error);
@@ -127,21 +131,23 @@ angular.module("module_name")
     }
   );
   $scope.deleteFilter = function(webId, filterId) {
-    $resource('http://localhost:8080/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"}).delete({webId: webId}, {filterId: filterId}, function(data) {
+    $resource('http://localhost:1607/webs/:webId/:filterId', {webId: "@webId", filterId: "@filterId"}).delete({webId: webId}, {filterId: filterId}, function(data) {
       console.log(data);
       $location.path('/webs/'+webId);
     });
   };
   $scope.updateFilter = function(webId, filterId) {
     pattern = $scope.filter.pattern;
+    level = $scope.filter.level;
     type = $scope.filter.type;
     var datajson = {
       pattern: pattern,
+      level: level,
       filterType: type
     };
     $http({
         method: 'PUT',
-        url: 'http://localhost:8080/webs/'+webId+'/'+filterId,
+        url: 'http://localhost:1607/webs/'+webId+'/'+filterId,
         data: datajson
       }).then(function(data, status, headers, config){
         console.log(data);

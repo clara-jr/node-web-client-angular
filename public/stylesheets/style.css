@@ -84,7 +84,7 @@ input {
 
 .down {
 	display:block;
-	max-width: 160px;
+	max-width: 560px;
 	padding: 5px 0;
 	text-align: left;
 	list-style: none;
@@ -100,7 +100,7 @@ input {
 	padding: 3px 20px;
 	margin-bottom: 0px;
 	clear: both;
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 1.42857143;
 	color: #333;
 	white-space:

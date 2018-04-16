@@ -1,8 +1,11 @@
 <div class="container">
+	<div class="row" ng-show='(webs.length <= 0)'>
+		<p>Ups! You haven't uploaded any webs yet!</p>
+	</div>
 	<div class="row" ng-show='(webs.length > 0)'>
 		<div ng-repeat="w in webs">
-			<div class="col-xs-12 col-sm-6 col-md-3" >
-				<a href='#!/webs/{{w._id}}' style="background-color:#fff; margin-bottom: 10px; margin-top: 10px;" class="btn btn-default" type="button"><span class="glyphicon glyphicon-edit" style="font-size: 16px;"></span>{{w.url}}</a>
+			<div class="col-xs-12 col-md-6" >
+				<a href='#!/webs/{{w._id}}' style="background-color:#fff; margin-bottom: 10px; margin-top: 10px;" class="btn btn-default" type="button"><span class="glyphicon glyphicon-edit" style="font-size: 16px;"></span>{{w.name}}</a>
 				<a style="border-radius: 50%; padding: 2px 8px; margin-left: 5px; margin-top: 2px; margin-bottom: 2px;" class="btn btn-danger" type="submit" ng-click="deleteWeb(w._id)"><span style="padding-right:0px;" class="glyphicon glyphicon-minus" style="font-size: 16px;"></span></a>
 				<ul class="down" style="margin-left:auto;">
 					<li><p style="color:#337ab7;"><b>Genre:</b></p></li>
@@ -16,11 +19,8 @@
 				    </span>
 				</ul>
 			</div>
-			<div class="clearfix visible-sm-block" ng-if="$odd"></div>
-			<div class="clearfix visible-md-block" ng-if="($index+1) % 4 == 0"></div>
+			<div class="clearfix visible-block" ng-if="$odd"></div>
+			<!--<div class="clearfix visible-md-block" ng-if="($index+1) % 4 == 0"></div>-->
 		<div>
-	</div>
-	<div class="row" ng-show='(webs.length <= 0)'>
-		<p>Ups! You haven't uploaded any webs yet!</p>
 	</div>
 </div>
