@@ -63,6 +63,12 @@ a {
 	text-align: center;
 }
 
+@media screen and (min-width: 1500px) {
+	.container {
+    	width: 1470px;
+	}
+}
+
 .btn {
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -84,7 +90,6 @@ input {
 
 .down {
 	display:block;
-	max-width: 560px;
 	padding: 5px 0;
 	text-align: left;
 	list-style: none;

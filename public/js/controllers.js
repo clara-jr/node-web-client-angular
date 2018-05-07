@@ -159,4 +159,17 @@ angular.module("module_name")
         $scope.errorFilter = error.data.error;
     });
   };
+})
+.filter("myFormat", function() {
+  return function(pattern) {
+    var patternFormat = pattern.match(/.{1,25}/g);
+    var patternFormatTxt = "";
+    if (screen.width <= 768) {
+      if (pattern.length > 25) patternFormatTxt = patternFormat[0] + " ...";
+      else patternFormatTxt = patternFormat[0];
+    } else {
+      patternFormatTxt = pattern;
+    }
+    return patternFormatTxt;
+  };
 });
